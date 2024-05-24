@@ -1,21 +1,30 @@
 import unittest
 
 from parentnode import ParentNode
+from leafnode import LeafNode
 
 
 class TestParentNode(unittest.TestCase):
     
     def test_props_to_html(self):
-       node1 = ParentNode("p", "This is a paragraph of text.")
-       node2 = ParentNode("a", "Click me!", {"href": "https://www.google.com"})
+       node1 = ParentNode(
+    "p",
+    [
+        LeafNode("b", "Bold text"),
+        LeafNode(None, "Normal text"),
+        LeafNode("i", "italic text"),
+        LeafNode(None, "Normal text"),
+    ],
+    )
+       
+    
 
        node1_to_html = node1.to_html()
-       expected_1 = '<p>This is a paragraph of text.</p>'
-       node2_to_html = node2.to_html()
-       expected_2 = '<a href="https://www.google.com">Click me!</a>'
+       expected_1 = '<p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>'
+       expected_html =  "<PARENT><p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p><p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p><p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p><p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p></PARENT>"
 
        self.assertEqual(node1_to_html,expected_1)
-       self.assertEqual(node2_to_html,expected_2)
+       self.assertEqual(node1_to_html,expected_html)
 
 if __name__ == "__main__":
     unittest.main()
